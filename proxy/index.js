@@ -23,12 +23,17 @@ app.post('/webhook', async (req, res) => {
     console.log(`Forwarding webhook to: ${targetUrl}`);
 
     // Forward the request
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    // Forward the Authorization header if present
+    if (req.headers.authorization) {
+      headers['Authorization'] = req.headers.authorization;
+    }
+
     const response = await axios.post(targetUrl, req.body, {
-      headers: {
-        'Content-Type': 'application/json',
-        // Forwarding User-Agent or other headers might be useful but risking CORS or other issues.
-        // For now keeping it simple.
-      }
+      headers,
     });
 
     console.log(`Forwarded successfully. Status: ${response.status}`);
