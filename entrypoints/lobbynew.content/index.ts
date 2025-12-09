@@ -1,4 +1,5 @@
 import { onRemove as onQrCodeRemove, qrCode } from "./qr-code";
+import { onRemove as onQrCodeTournamentRemove, qrCodeTournament } from "./qr-code-tournament";
 
 import type { IConfig } from "@/utils/storage";
 import type { GameMode, IGameData } from "@/utils/game-data-storage";
@@ -69,9 +70,13 @@ export default defineContentScript({
         if (config.qrCode.enabled) {
           await initScript(qrCode, url).catch(console.error);
         }
+      } else if (/\/tournaments\/[0-9a-f-]+/.test(url)) {
+        // Initialize QR code tournament feature when on a tournament page
+        await initScript(qrCodeTournament, url).catch(console.error);
       } else {
-        // Clean up when leaving lobby
+        // Clean up when leaving lobby or tournament
         await onQrCodeRemove();
+        await onQrCodeTournamentRemove();
       }
     });
   },
