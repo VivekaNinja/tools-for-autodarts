@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.0] - 2025-12-09
+
+### Fixed
+- Fixed Next Player On Takeout Stuck feature getting triggered twice
+  - Ensured status field is always set in websocket board data processing to prevent undefined status values
+  - Prevents duplicate triggers when board status updates are received
+
 ## [2.1.27] - 2025-12-09
 
 ### Enhanced

@@ -76,6 +76,8 @@ export async function nextPlayerOnTakeOutStuck() {
       if (gameData.match?.variant === "Bull-off") return;
 
       if (boardData.status === "Takeout in progress") {
+        console.warn("Autodarts Tools: Takeout in progress");
+
         // Use a more robust selector that works in both normal and fullscreen modes
         // Increase timeout to allow more time for DOM to settle in fullscreen mode
         let nextBtn = await waitForElementWithTextContent("button", "Next", 2000);

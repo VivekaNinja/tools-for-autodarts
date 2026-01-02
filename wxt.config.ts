@@ -114,10 +114,10 @@ export default defineConfig({
       }),
     ],
     build: {
-      terserOptions: {
-        compress: {
-          pure_funcs: [ "console.log", "console.debug" ],
-        },
+      minify: "esbuild",
+      target: "esnext",
+      esbuild: {
+        drop: [ "console", "debugger" ],
       },
     },
   }),

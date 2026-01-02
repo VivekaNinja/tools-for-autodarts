@@ -252,6 +252,7 @@ export async function processWebSocketMessage(channel: string, data: ILobbies | 
       AutodartsToolsBoardData.setValue({
         ...boardData,
         ...data,
+        status: data.status || "",
       });
 
       break;
