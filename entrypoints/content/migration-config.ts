@@ -167,6 +167,7 @@ async function migrateConfig(currentConfigVersion: number) {
       case 19:
         // Migration from version 19 to version 20
         config.version = 20;
+        config.wledFx.onlyOnce = true;
         config.wledFx.effects.forEach((effect) => {
           effect.type = WledType.URL;
           effect.json_api = '';

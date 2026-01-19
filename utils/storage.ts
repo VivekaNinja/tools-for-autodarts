@@ -151,6 +151,7 @@ export interface IConfig {
   };
   wledFx: {
     enabled: boolean;
+    onlyOnce: boolean;
     boardIds: string[];
     effects: IWled[];
   };
@@ -665,6 +666,7 @@ export const defaultConfig: IConfig = {
   },
   wledFx: {
     enabled: false,
+    onlyOnce: true,
     boardIds: [],
     effects: [
       {

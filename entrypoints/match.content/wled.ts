@@ -283,8 +283,10 @@ export function setEffectByTrigger(trigger: string): void {
 }
 
 let currentEffect: IWled;
-export function setEffect(effect: IWled) {
-  if (effect === currentEffect) {
+  if (!config)
+    config = await AutodartsToolsConfig.getValue();
+
+  if (config.wledFx.onlyOnce && effect === currentEffect) {
     console.info("Autodarts Tools: WLED: didn't fetch", effect.url, "because the effect is already active");
     return;
   }
