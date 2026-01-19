@@ -20,14 +20,35 @@ let debounceTimer: number | null = null;
 const DEBOUNCE_DELAY = 200;
 
 async function checkStatus(boardData: IBoard) {
+  const boardEvent: string | undefined = boardData.event;
   const boardStatus: string | undefined = boardData.status;
+
+  console.log(`Autodarts Tools: WLED: Board: event '${boardEvent}', status '${boardStatus}'`);
 
   if (
     boardStatus === "Takeout in progress"
     && isTriggerPresent("takeout")
-    && (config.wledFx.boardIds.length === 0
-      || (config.wledFx.boardIds.length > 0 && config.wledFx.boardIds.includes(currentBoardId)))
+    && (config!.wledFx.boardIds.length === 0
+      || (config!.wledFx.boardIds.length > 0 && config!.wledFx.boardIds.includes(currentBoardId)))
   ) { setEffectByTrigger("takeout"); }
+  else if (
+    boardStatus === "Stopped"
+    && isTriggerPresent("board_stopped")
+    && (config!.wledFx.boardIds.length === 0
+      || (config!.wledFx.boardIds.length > 0 && config!.wledFx.boardIds.includes(currentBoardId)))
+  ) { setEffectByTrigger("board_stopped"); }
+  else if (
+    boardEvent === "Calibration started"
+    && isTriggerPresent("calibration_started")
+    && (config!.wledFx.boardIds.length === 0
+      || (config!.wledFx.boardIds.length > 0 && config!.wledFx.boardIds.includes(currentBoardId)))
+  ) { setEffectByTrigger("calibration_started"); }
+  else if (
+    boardEvent === "Calibration finished"
+    && isTriggerPresent("calibration_finished")
+    && (config!.wledFx.boardIds.length === 0
+      || (config!.wledFx.boardIds.length > 0 && config!.wledFx.boardIds.includes(currentBoardId)))
+  ) { setEffectByTrigger("calibration_finished"); }
 }
 
 export async function wledFx() {
@@ -36,12 +57,12 @@ export async function wledFx() {
   try {
     config = await AutodartsToolsConfig.getValue();
     const gameData = await AutodartsToolsGameData.getValue();
-    console.log(`Autodarts Tools: WLED: Config loaded, ${config?.wledFx?.effects?.length || 0} effects available`);
+    console.log(`Autodarts Tools: WLED: Config loaded, ${config.wledFx?.effects?.length || 0} effects available`);
 
     if (!gameDataWatcherUnwatch) {
       gameDataWatcherUnwatch = AutodartsToolsGameData.watch(
         (gameData: IGameData, oldGameData: IGameData) => {
-          if (!config?.wledFx?.enabled) return;
+          if (!config.wledFx?.enabled) return;
 
           // Debounce the processGameData call
           if (debounceTimer) {
@@ -68,7 +89,7 @@ export async function wledFx() {
     if (!lobbyDataWatcherUnwatch) {
       lobbyDataWatcherUnwatch = AutodartsToolsLobbyData.watch(
         async (_lobbyData: ILobbies | undefined, _oldLobbyData: ILobbies | undefined) => {
-          if (!_lobbyData || !_oldLobbyData || !config?.wledFx?.enabled) return;
+          if (!_lobbyData || !_oldLobbyData || !config.wledFx?.enabled) return;
           const currentURL = window.location.href;
           if (!currentURL.includes("lobbies")) return;
 
@@ -98,7 +119,7 @@ export async function wledFx() {
     if (!tournamentDataWatcherUnwatch) {
       tournamentDataWatcherUnwatch = AutodartsToolsTournamentData.watch(
         async (tournamentData: ITournament | undefined, oldTournamentData: ITournament | undefined) => {
-          if (!tournamentData || !config?.wledFx?.enabled) return;
+          if (!tournamentData || !config.wledFx?.enabled) return;
 
           // Check if tournament event is "start" and trigger the tournament_ready effect
           if (tournamentData.event === "start") {
@@ -237,10 +258,12 @@ function isTriggerPresent(trigger: string): boolean {
 /**
  * Set an effect based on the trigger
  */
-export function setEffectByTrigger(trigger: string): void {
-  if (!config?.wledFx?.effects || !config.wledFx.effects.length) {
-    console.log("Autodarts Tools: WLED: No effects configured");
-    return;
+  if (!config) {
+    config = await AutodartsToolsConfig.getValue();
+    if (!config.wledFx.effects.length) {
+      console.log("Autodarts Tools: WLED: No effects configured");
+      return;
+    }
   }
 
   // Find all effects that match the trigger

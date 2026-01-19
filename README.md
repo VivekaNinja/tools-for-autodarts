@@ -298,6 +298,11 @@ WLED is a popular open-source firmware for controlling addressable LED strips (W
 #### Supported Triggers
 Effects can be triggered by various game events using these triggers:
 
+##### Board Status (only during a game)
+- **board_stopped**: when the board gets stopped
+- **calibration_Started**: when calibration is started
+- **calibration_finished**: when calibration has finished
+
 ##### Game Events
 - **`gameon`**: At the start of each player's turn (default fallback effect)
 - **`takeout`**: When takeout is in progress
