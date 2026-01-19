@@ -170,6 +170,7 @@ async function migrateConfig(currentConfigVersion: number) {
         config.wledFx.onlyOnce = true;
         config.wledFx.effects.forEach((effect) => {
           effect.type = WledType.URL;
+          effect.preset = '';
           effect.json_api = '';
         });
         break;

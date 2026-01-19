@@ -310,6 +310,7 @@ export interface ILobbyStatus {
 }
 
 export enum WledType {
+  PRESET = "PRESET",
   URL = "URL",
   API = "API",
 }
@@ -318,6 +319,7 @@ export interface IWled {
   name: string;
   type: WledType;
   url: string;
+  preset: string;
   json_api: string;
   enabled: boolean;
   triggers: string|string[];
@@ -673,6 +675,7 @@ export const defaultConfig: IConfig = {
         name: "gameon",
         type: WledType.URL,
         url: "http://wled-device.local/win/PL=10",
+        preset: "",
         json_api: "",
         enabled: true,
         triggers: [ "gameon" ],
@@ -680,7 +683,8 @@ export const defaultConfig: IConfig = {
       {
         name: "takeout",
         type: WledType.URL,
-        url: "http://wled-device.local/win/PL=24",
+        url: "wled-device.local",
+        preset: "4",
         json_api: "",
         enabled: true,
         triggers: [ "takeout" ],
@@ -688,43 +692,12 @@ export const defaultConfig: IConfig = {
       {
         name: "gameshot",
         type: WledType.URL,
-        url: "http://wled-device.local/win/PL=9",
+        url: "192.168.0.69",
+        preset: "6",
         json_api: "",
         enabled: true,
         triggers: [ "gameshot" ],
-      },
-      {
-        name: "matchshot",
-        type: WledType.URL,
-        url: "http://wled-device.local/win/PL=3",
-        json_api: "",
-        enabled: true,
-        triggers: [ "matchshot" ],
-      },
-      {
-        name: "180",
-        type: WledType.URL,
-        url: "http://wled-device.local/win/PL=12",
-        json_api: "",
-        enabled: true,
-        triggers: [ "180" ],
-      },
-      {
-        name: "busted",
-        type: WledType.URL,
-        url: "http://wled-device.local/win/PL=20",
-        json_api: "",
-        enabled: true,
-        triggers: [ "busted" ],
-      },
-      {
-        name: "tournament_ready",
-        type: WledType.URL,
-        url: "http://wled-device.local/win/PL=15",
-        json_api: "",
-        enabled: true,
-        triggers: [ "tournament_ready" ],
-      },
+      }
     ],
   },
 };
