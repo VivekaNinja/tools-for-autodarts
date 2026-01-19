@@ -392,7 +392,7 @@ Takeout;http://wled-device.local/win/PL=3;takeout;busted
 #### Game Mode Support
 - **X01 Games**: Full support for all triggers and point combinations
 - **Cricket**: Basic support with plans for expanded cricket-specific triggers
-- **Bull-off**: Automatically disabled during bull-off rounds
+- **Bull-off**: `bulloff` trigger on bull-off rounds
 
 #### Best Practices
 1. **Test Effects**: Use the play button in settings to test effects before games

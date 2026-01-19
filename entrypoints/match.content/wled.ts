@@ -171,7 +171,10 @@ async function processGameData(
 
   const editMode: boolean = gameData.match.activated !== undefined && gameData.match.activated >= 0;
   if (editMode) return;
-  if (gameData.match.variant === "Bull-off") return;
+  if (gameData.match.variant === "Bull-off" && isTriggerPresent("bulloff")) {
+    setEffectByTrigger("bulloff");
+    return;
+  }
 
   // gameon is the default effect to play when no other event happened
   let nextEffect: string | IWled = "gameon";
