@@ -2,10 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.2] - 2026-01-20
+
+### Fixed
+- Fixed gameshot/matchshot sounds getting triggered multiple times by the AI referee
+  - Added cooldown mechanism to prevent duplicate sound triggers during the same turn
+  - Enhanced sound logic in both non-Cricket and Cricket game variants to respect the cooldown
+- Fixed streaming mode checkout suggestions not updating correctly
+  - Suggestions now properly adjust based on darts already thrown in the current turn
+  - Previously showed all 3 checkout darts regardless of how many were already thrown
+
 ## [2.2.0] - 2025-12-09
 
 ### Fixed
-- Temporary fix for board images extraction
+- Temporary fix for board images extraction (used by Zoom feature)
   - Disabled websocket board images handler that stopped working after recent update
   - Implemented DOM-based blob URL extraction as fallback method
   - Board images are now extracted from SVG elements in the DOM by converting blob URLs to base64 data URLs
