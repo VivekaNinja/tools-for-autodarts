@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.5] - 2026-01-22
+
+### Fixed
+- Fixed WebSocket events not being triggered after WXT framework update
+  - Resolved timing issue introduced in WXT 0.20.13 where event listeners were registered after script initialization
+  - Event listeners are now set up before script injection to prevent race conditions
+  - Added `runAt: "document_start"` for earlier content script execution
+
 ## [2.2.3] - 2026-01-21
 
 ### Added
