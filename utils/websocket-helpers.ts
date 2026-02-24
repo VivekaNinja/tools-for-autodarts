@@ -277,7 +277,23 @@ export async function processWebSocketMessage(channel: string, data: ILobbies | 
           const boardImages = await AutodartsToolsBoardImages.getValue();
           // Check for duplicates before adding
           if (!boardImages.images.includes(base64DataUrl)) {
-            boardImages.images.push(base64DataUrl);
+              boardImages.images.push(base64DataUrl);
+
+              // send image to local webserver;
+              try {
+                  // Send to local Windows saver
+                  fetch("http://127.0.0.1:8765/save", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      // add whatever metadata you want
+                      body: JSON.stringify({
+                          kind: "autodarts.board",
+                          ts: Date.now(),
+                          dataUrl: base64DataUrl,
+                      }),
+                  }).catch(() => { });
+
+              } catch { }
             while (boardImages.images.length > 6) {
               boardImages.images.shift();
             }
