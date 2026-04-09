@@ -27,7 +27,7 @@
     "@wxt-dev/webextension-polyfill": "^1.0.0",
     "idb": "^8.0.2",
     "jszip": "^3.10.1",
-    "lodash": "^4.17.21",
+    "lodash": "^4.18.1",
     "mitt": "^3.0.1",
     "qr-code-styling": "^1.9.2",
     "radix-vue": "^1.8.5",
